@@ -1,11 +1,24 @@
 #
 # Google CodeJam -  Qualification Round
 #
+# Saving the Universe Again
+#
 # Copyright (c) 2018
 # Authors: Szymon Bialkowski
 #
 # Version 1.0
 #
+# Strategy :
+# 1. Create stack of Charge indexes
+# 2. Each charge in dictionary includes
+#    -Shots after charge but before next charge
+#    -Damage before doubling on current charge (this gives us the difference for each shift)
+#    -Previous Shot (Increment previous shot count by hacked/shifted shots)
+# 3. If shield already stronger: 0
+# 4. If shield not stronger but no Charges: Impossible since can't reprogramme
+# 5. Iterate through charges and add minimum number of hacks
+# 6. Add shifted/hacked shots to previous element if it isnt the first one
+
 
 import math
 
@@ -49,7 +62,7 @@ def leastHacks(shieldStrength, robotsProgram):
 
     if totalDamage <= shieldStrength:
         return hacksRequired
-    elif stackLength == 0:
+    if stackLength == 0:
         return "IMPOSSIBLE"
 
     damageDifference = totalDamage - shieldStrength
